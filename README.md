@@ -18,7 +18,7 @@ However the cache was false sharing, because 2 threads can fall in the same cach
 so we tried padding in the third counter, which got us a best result.
 
 I think results would be different on other computers.
-How multiple threads are called by computer is non-deterministic, so it is difficult to have the same amount of time.
+How multiple threads are called by computer is non-deterministic, so it is difficult to have the same amount of time even on the same computer.
 Also, different processor might also have different cache line, this padding may not compatible.
 
 
