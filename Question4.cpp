@@ -8,19 +8,27 @@ int f(double d) { return static_cast<int>(2 * d); }
 template <typename T>
 class Counter{
 public:
-    Counter(T){
+    Counter(T func, bool counted = true){
         count = 0;
+        cur_func = func;
+        isCounted = counted;
     }
     template<typename... Args>
-    void operator()(Args &&... args) {
-        count ++;
+    auto operator()(Args &&... args) {
+        if(isCounted){
+            count ++;
+        }
+        return cur_func(std::forward<Args>(args)...);
     }
 
     int count;
+private:
+    bool isCounted;
+    T cur_func;
 };
 
 
-Counter cf(f);
+Counter cf(f); //can also be used as cf(f, false)
 
 int main() {
     cf(1.3);
