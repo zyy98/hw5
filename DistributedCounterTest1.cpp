@@ -21,19 +21,13 @@ void countALot()
 
 int main()
 {
-  vector<jthread> threads;
-  auto start = chrono::high_resolution_clock::now();
+    auto start = chrono::high_resolution_clock::now();
     {
-        jthread t{[] () {
-            for (size_t s = 0; s < reps; s++)
-                c++;
-        }};
-    }
-/*  for (size_t s = 0; s < threadCount; s++)
-    threads.push_back(jthread(countALot));
+        vector<jthread> threads;
+        for (size_t s = 0; s < threadCount; s++)
+            threads.push_back(jthread(countALot));
+    };
 
-  for (auto &thr : threads)
-    thr.join();*/
   auto end = chrono::high_resolution_clock::now();
   cout << "Count is " << c.get() << endl;
   cout << "Elapsed time is " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << "ms" << endl;

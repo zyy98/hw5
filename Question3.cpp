@@ -3,6 +3,8 @@
 //
 #include <iostream>
 #include <vector>
+#include <mutex>
+#include "Question3.h"
 
 using std::initializer_list;
 using std::array;
@@ -11,33 +13,34 @@ using std::mutex;
 
 namespace mpcs51044 {
 
-template<typename T>
-class Stack{
 
-public:
-    Stack() : data{} {}
+    template<typename T>
+    class Stack{
+    public:
+        Stack() : data{} {}
 
-    Stack(initializer_list<T> init){
-        data = {init};
-    }
+        Stack(initializer_list<T> init){
+            for (auto row : init){
+                data.push(row);
+            }
+        }
 
-    void push(int new_num){
-        std::lock_guard guard(m);
-        data.push_back(new_num);
-    }
+        void push(T new_num){
+            std::lock_guard guard(m);
+            data.push(new_num);
+        }
 
-    int pop(){
-        std::lock_guard guard(m);
-        int last = data.back();
-        data.pop_back();
-        return last;
+        T pop(){
+            std::lock_guard guard(m);
+            return data.pop();
 
-    }
+        }
 
-private:
-    mutex m;
-    std::vector<T> data;
-};
+    private:
+        mutex m;
+        List<T> data;
+    };
+
 }
 
 
